@@ -7,12 +7,12 @@ import (
 )
 
 const (
-	apiBlogUrl      = "http://api.tumblr.com/v2/blog/"            // api url to get blog data or write to a blog
-	apiUserUrl      = "http://api.tumblr.com/v2/user/"            // api url to get user data or perform actions
-	apiTaggedUrl    = "http://api.tumblr.com/v2/tagged?"          // api url to get tagged posts
-	requestTokenUrl = "http://www.tumblr.com/oauth/request_token" // oauth request-token URL
+	apiBlogUrl      = "https://api.tumblr.com/v2/blog/"            // api url to get blog data or write to a blog
+	apiUserUrl      = "https://api.tumblr.com/v2/user/"            // api url to get user data or perform actions
+	apiTaggedUrl    = "https://api.tumblr.com/v2/tagged?"          // api url to get tagged posts
+	requestTokenUrl = "https://www.tumblr.com/oauth/request_token" // oauth request-token URL
 	authorizeUrl    = "https://www.tumblr.com/oauth/authorize"    // oauth authorize URL
-	accessTokenUrl  = "http://www.tumblr.com/oauth/access_token"  // oauth access-token URL
+	accessTokenUrl  = "https://www.tumblr.com/oauth/access_token"  // oauth access-token URL
 )
 
 type Tumblr struct {
