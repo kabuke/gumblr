@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"strings"
@@ -92,7 +93,8 @@ func (api Tumblr) post(url string, params string) Response {
 	}
 	defer clientResponse.Body.Close()
 
-	body, err := ioutil.ReadAll(clientResponse.Body)
+	//body, err := ioutil.ReadAll(clientResponse.Body)
+	body, err := ModifyIoutilReadAll(clientResponse)
 	if err != nil {
 		log.Println(err)
 	}
@@ -103,4 +105,27 @@ func (api Tumblr) post(url string, params string) Response {
 		log.Println(err)
 	}
 	return response
+}
+
+func ModifyIoutilReadAll(src *http.Response) ([]byte, error) {
+	buf := &bytes.Buffer{}
+	dst := bufio.NewWriter(buf)
+	byteLenth, err := io.Copy(dst, src.Body)
+	if err != nil {
+		return nil, err
+	}
+	dst.Flush()
+
+	if byteLenth <= 0 {
+		log.Println("Unable to read bytes lenth from request....")
+		return nil, err
+	}
+
+	if err != nil {
+		log.Printf("Unable to read bytes from request : %v", err)
+		return nil, err
+	}
+
+	respBytes := buf.Bytes()
+	return respBytes, nil
 }
