@@ -1,10 +1,12 @@
 package tumblr
 
 import (
+	"bufio"
+	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"strings"
@@ -93,13 +95,12 @@ func (api Tumblr) post(url string, params string) Response {
 	}
 	defer clientResponse.Body.Close()
 
-	//body, err := ioutil.ReadAll(clientResponse.Body)
+	// body, err := ioutil.ReadAll(clientResponse.Body)
 	body, err := ModifyIoutilReadAll(clientResponse)
 	if err != nil {
 		log.Println(err)
 	}
 
-	
 	err = json.Unmarshal(body, &response)
 	if err != nil {
 		log.Println(err)
@@ -111,9 +112,6 @@ func ModifyIoutilReadAll(src *http.Response) ([]byte, error) {
 	buf := &bytes.Buffer{}
 	dst := bufio.NewWriter(buf)
 	byteLenth, err := io.Copy(dst, src.Body)
-	if err != nil {
-		return nil, err
-	}
 	dst.Flush()
 
 	if byteLenth <= 0 {
