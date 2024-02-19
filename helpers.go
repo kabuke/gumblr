@@ -84,9 +84,11 @@ func (api Tumblr) post(url string, params string) Response {
 	api.oauthService.Sign(request, &api.config)
 	client := new(http.Client)
 	clientResponse, err := client.Do(request)
-
+	var response Response
 	if err != nil {
 		log.Println(err)
+		response.Meta.Status = 500
+		return response
 	}
 	defer clientResponse.Body.Close()
 
@@ -95,7 +97,7 @@ func (api Tumblr) post(url string, params string) Response {
 		log.Println(err)
 	}
 
-	var response Response
+	
 	err = json.Unmarshal(body, &response)
 	if err != nil {
 		log.Println(err)
