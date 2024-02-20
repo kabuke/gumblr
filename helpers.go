@@ -10,6 +10,7 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 )
 
 // This method GET requests a URL and unmarshals it based on a specified blank struct
