@@ -83,6 +83,7 @@ func (api Tumblr) post(url string, params string) Response {
 		log.Println(err)
 	}
 
+	request.ContentLength = int64(len(params))
 	request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	api.oauthService.Sign(request, &api.config)
