@@ -86,6 +86,7 @@ func (api Tumblr) post(url string, params string) Response {
 
 	api.oauthService.Sign(request, &api.config)
 	client := new(http.Client)
+	client.Timeout = 120 * time.Second
 	clientResponse, err := client.Do(request)
 	var response Response
 	if err != nil {
